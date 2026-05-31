@@ -1,7 +1,3 @@
-
----
-
-```markdown
 # 🏦 Profit-Driven Credit Risk Engine
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
@@ -41,18 +37,18 @@ To maintain absolute control over the mathematical architecture, we bypassed sta
 ### 1. Model Calibration (Is it honest?)
 Before applying business rules, the model must output reliable probabilities. The Calibration Curve below shows that our custom NumPy engine hugs the diagonal reality line perfectly.
 
-![Calibration Curve](docs/model_reliability_diagram.png)
+![Calibration Curve](.//model_reliability_diagram.png)
 *(A predicted 40% risk translates cleanly to a 40% real-world default rate).*
 
 ### 2. The Precision-Recall Trade-off
 Because we are hunting for the minority class (defaulters), this curve visualizes the friction between catching every bad actor (Recall) and falsely rejecting good customers (Precision).
 
-![Precision-Recall Curve](docs/preicison_recall_curve.png)
+![Precision-Recall Curve](./preicison_recall_curve.png)
 
 ### 3. The Grand Finale: Optimizing for Profit
 This graph proves the business value of the model. By simulating the financial matrix across every possible threshold from 0.01 to 0.99, we found the exact peak of profitability. At a **0.11 threshold**, the bank maximizes interest generation while successfully blocking catastrophic defaults.
 
-![Threshold vs Profit](docs/new_threshold_vs_net_profit.png)
+![Threshold vs Profit](./new_threshold_vs_net_profit.png)
 
 ---
 
@@ -61,50 +57,3 @@ This graph proves the business value of the model. By simulating the financial m
 * **Core Engine:** Pure Python / NumPy (Custom ML architecture)
 * **Backend API:** FastAPI (Uvicorn server)
 * **Frontend UI:** Streamlit (Interactive dashboard for loan officers)
-
-```text
-├── core/
-│   ├── custom_logistic_regression.py   # The math engine (Gradient Descent, L2, Sigmoid)
-│   ├── credit_risk_model.pkl           # Serialized model & scaling parameters
-├── main.py                             # FastAPI backend routing and logic
-├── app.py                              # Streamlit frontend dashboard
-├── notebooks/
-│   └── threshold_optimization.ipynb    # Data exploration and profit loop calculations
-├── docs/                               # Performance graphs
-└── README.md
-
-```
-
----
-
-## 🚀 How to Run Locally
-
-To spin up both the API and the UI on your local machine, you will need two terminal windows.
-
-**1. Start the FastAPI Backend:**
-Open your terminal and run the Uvicorn server to host the prediction API.
-
-```bash
-uvicorn main:app --reload
-
-```
-
-*The API will be available at `http://127.0.0.1:8000*`
-
-**2. Start the Streamlit Frontend:**
-Open a second terminal window and launch the interactive dashboard.
-
-```bash
-streamlit run app.py
-
-```
-
-*Your browser will automatically open to `http://localhost:8501*`
-
----
-
-*Built to bridge the gap between mathematical theory and enterprise profitability.*
-
-```
-
-```
