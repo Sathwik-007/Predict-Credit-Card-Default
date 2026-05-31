@@ -82,12 +82,6 @@ streamlit run app.py
 
 ```
 
-*Your browser will automatically open to `http://localhost:8501*`
+*Your browser will automatically open to `http://localhost:8501`*
 
 ---
-
-*Built to bridge the gap between mathematical theory and enterprise profitability.*
-
-```
-
-```
