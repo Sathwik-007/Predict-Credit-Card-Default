@@ -57,3 +57,37 @@ This graph proves the business value of the model. By simulating the financial m
 * **Core Engine:** Pure Python / NumPy (Custom ML architecture)
 * **Backend API:** FastAPI (Uvicorn server)
 * **Frontend UI:** Streamlit (Interactive dashboard for loan officers)
+
+---
+
+## 🚀 How to Run Locally
+
+To spin up both the API and the UI on your local machine, you will need two terminal windows.
+
+**1. Start the FastAPI Backend:**
+Open your terminal and run the Uvicorn server to host the prediction API.
+
+```bash
+uvicorn main:app --reload
+
+```
+
+*The API will be available at `http://127.0.0.1:8000*`
+
+**2. Start the Streamlit Frontend:**
+Open a second terminal window and launch the interactive dashboard.
+
+```bash
+streamlit run app.py
+
+```
+
+*Your browser will automatically open to `http://localhost:8501*`
+
+---
+
+*Built to bridge the gap between mathematical theory and enterprise profitability.*
+
+```
+
+```
