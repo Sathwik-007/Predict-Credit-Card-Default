@@ -1,0 +1,39 @@
+# ==========================================
+# 1. THE NUKE (Ignore Everything)
+# ==========================================
+*
+
+# ==========================================
+# 2. DIRECTORY TRAVERSAL
+# ==========================================
+# You must un-ignore all directories so Git can actually look 
+# inside them to find your allowed files.
+!*/
+
+# ==========================================
+# 3. THE WHITELIST (Allowed File Types)
+# ==========================================
+# Now un-ignore the specific file types you care about.
+!*.png
+!*.ipynb
+!*.py
+!*.md
+!*.csv
+!*.pkl
+!*.txt
+
+# Always un-ignore the .gitignore file itself so your rules are pushed!
+!.gitignore
+
+# ==========================================
+# 4. THE EXCLUSIONS (Re-ignoring bad folders)
+# ==========================================
+# Because you un-ignored all folders in Step 2, Git will try to track 
+# any .py or .png files inside your virtual environments or caches. 
+# We must explicitly re-ignore those specific folders.
+venv/
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.vscode/
+.idea/
