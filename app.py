@@ -26,7 +26,8 @@ if st.button("Predict"):
         "age": age,
         "utilisation_rate": utilisation_rate,
         "pay_to_bill_ratio": pay_to_bill_ratio,
-        "delinquency_score": delinquency_score
+        "delinquency_score": delinquency_score,
+        
     }
 
     response = requests.post("http://127.0.0.1:8000/predict", json=input_data)
@@ -51,9 +52,9 @@ if st.button("Predict"):
         decision = str(result['decision'])
         risk = str(result['risk_category'])
         
-        if decision == 'Approve':
+        if decision == 'Approved':
             st.success(f"**Decision: {decision}** — {risk}")
-        elif decision == 'Manual Review':
+        elif decision == 'Approved with Caution':
             st.warning(f"**Decision: {decision}** — {risk}")
         else:
             st.error(f"**Decision: {decision}** — {risk}")
@@ -62,9 +63,9 @@ if st.button("Predict"):
         with st.expander("ℹ️ How is this decision made?"):
             st.write("""
             **Optimal Risk Threshold: 11% (0.11)** The system classifies applicants based on their calculated probability of defaulting:
-            * **Less than 11%:** Low Risk (Approve)
-            * **11% to 15%:** Medium Risk (Manual Review)
-            * **Above 15%:** High Risk (Reject)
+            * **Less than 11%:** Low Risk - Approved for maximum of limit $50000
+            * **11% to 25%:** Medium Risk - Approved with caution, maximum of limit $30000
+            * **Above 25%:** High Risk - Rejected $0 limit.
             """)
 
     else:

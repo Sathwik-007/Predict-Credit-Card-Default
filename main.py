@@ -54,7 +54,14 @@ except Exception as e:
 
 @app.post("/predict", response_model=Dict[str, Any])
 def predict(applicant: ApplicantData):
+
     try:
+        age = applicant.age
+        utilisation_rate = applicant.utilisation_rate
+        delinquency_score = applicant.delinquency_score
+
+        age_x_util = age * utilisation_rate
+        util_x_delin = utilisation_rate * delinquency_score
         raw_features = np.array([applicant.limit_bal,
                                 applicant.sex,
                                 applicant.education,
@@ -62,7 +69,13 @@ def predict(applicant: ApplicantData):
                                 applicant.age,
                                 applicant.utilisation_rate,
                                 applicant.pay_to_bill_ratio,
-                                applicant.delinquency_score]).reshape(1, -1)
+                                applicant.delinquency_score,
+                                age ** 2,
+                                utilisation_rate ** 2,
+                                delinquency_score ** 2,
+                                age_x_util,
+                                util_x_delin
+                                ]).reshape(1, -1)
         
         scaled_features = (raw_features - training_mean) / training_std
 
@@ -76,22 +89,28 @@ def predict(applicant: ApplicantData):
         risk_category = ''
         decision = ''
         print(f"Prediction: {prediction}, Credit Score: {credit_score}")  # Debugging statement to check the prediction and credit score values
+
+        credit_limit = 0
     
-        if prediction >= OPTIMAL_THRESHOLD and prediction <= 0.15:
-            decision = 'Manual Review'
-            risk_category = "Medium Risk"
-        elif prediction >= OPTIMAL_THRESHOLD:
-            decision = 'Reject'
-            risk_category = "High Risk"
+        if prediction < OPTIMAL_THRESHOLD:
+            risk_category = 'Low Risk'
+            decision = 'Approved'
+            credit_limit = 50000
+        elif prediction < 0.25:
+            risk_category = 'Medium Risk'
+            decision = 'Approved with Caution'
+            credit_limit = 3000
         else:
-            decision = 'Approve'
-            risk_category = "Low Risk"
+            risk_category = 'High Risk'
+            decision = 'Declined'
+            credit_limit = 0
         
         return {
             "credit_score": credit_score,
             'defaulting_probability': round(prediction, 4),
             'risk_category': risk_category,
-            'decision': decision
+            'decision': decision,
+            'credit_limit': credit_limit
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f'An error occurred during prediction: {str(e)}')
